@@ -1,0 +1,17 @@
+name: Bug report
+description: Report a reproducible skill or installation issue
+body:
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Skill name, repository revision, agent/client version and operating system.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Steps, expected and actual behavior. Remove API keys, storage credentials, signed URLs and private data.
+    validations:
+      required: true
