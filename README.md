@@ -2,15 +2,16 @@
 
 [简体中文](README.zh-CN.md) · [FlashData](https://flashdata.dev) · [API documentation](https://flashdata.dev/docs) · [Pricing](https://flashdata.dev/pricing)
 
-Official agent skills for Google Search, YouTube data and source-backed research with FlashData. This repository contains **16 portable skills**: one research skill and 15 task skills, each with instructions and examples.
+Official agent skills for Google Search, YouTube data and source-backed research with FlashData. This repository contains **17 portable skills**: one standalone CLI skill, one MCP research skill and 15 task skills, each with instructions and examples.
 
 ## Choose a workflow
 
 | You want to | Start here |
 | --- | --- |
-| Research across web and video sources | `flashdata` |
+| Use the standalone CLI | `flashdata` |
+| Research through an MCP connection | `flashdata-mcp` |
 | Use one Google or YouTube capability | Choose a task skill below |
-| Configure an MCP connection | [Connection guide](skills/flashdata/references/connection.md) |
+| Configure an MCP connection | [Connection guide](skills/flashdata-mcp/references/connection.md) |
 | Run a local MCP server | [FlashData MCP](https://github.com/flashdatadev/flashdata-mcp) |
 | Use the standalone command-line application | [FlashData CLI](https://github.com/flashdatadev/flashdata-cli) |
 
@@ -22,18 +23,23 @@ List the available skills using the [skills CLI](https://skills.sh/docs):
 npx skills add flashdatadev/flashdata-skills --list
 ```
 
-Install the research skill or select only the tasks you need:
+Choose the CLI skill, the MCP research skill, or individual tasks:
 
 ```sh
 npx skills add flashdatadev/flashdata-skills --skill flashdata
+npx skills add flashdatadev/flashdata-skills --skill flashdata-mcp
 npx skills add flashdatadev/flashdata-skills --skill google-search --skill youtube-transcript
 ```
 
 Select your agent when prompted. Add `--agent codex` to select Codex, or another agent supported by the skills CLI. The default scope is the current project; `--global` chooses a user-wide installation. Review the selected skill and any existing skill with the same name before replacing it.
 
-Alternatively, copy an entire `skills/<name>/` directory into the skill location documented by your agent. Keep its `references/` subdirectory when present. No sibling skill is required.
+Alternatively, copy an entire `skills/<name>/` directory into the skill location documented by your agent. Keep its `references/` and `scripts/` subdirectories when present. No sibling skill is required.
 
 Installing a skill provides instructions and reference files. It does not install an MCP server or CLI, connect an account, or submit data queries. Client marketplaces and directory listings are separate from this source repository.
+
+## Updating an existing installation
+
+The MCP research skill previously used the name `flashdata`. It is now `flashdata-mcp`; install that name to continue using MCP. `flashdata` now matches the standalone CLI skill distributed by the FlashData website. Choose the intended skill before replacing an older installation. This rename does not change credentials or MCP connections.
 
 ## Connect FlashData
 
@@ -50,11 +56,18 @@ After connecting, ask the agent to quote one Google search with `get_pricing`, `
 
 The Python quick starts inside task skills use Python 3.10+, `mcp==1.30.0` and `httpx==0.28.1`. They are optional examples for hosted MCP, not dependencies required to read or install a skill. Running a data example sends a paid query; use it only within your approved task and budget.
 
+## Response formats
+
+Agent workflows prefer Markdown. The CLI skill requests `--accept text/plain --respond-with markdown --json=false` for content. Local MCP 0.3.0 defaults to Markdown text, with original fields in `structuredContent`; `response_format: "text"` and `"json"` are explicit alternatives. Hosted and older servers may differ: use only options advertised by the connected tool schema. REST and SDK defaults remain JSON.
+
+The bundled Python scripts return complete structured results for programs. They select JSON when supported, read every chunk before closing the session, and never repeat the original paid call. Keep each script’s `mcp_response.py` helper beside it.
+
 ## Skills
 
 | Skill | Purpose |
 | --- | --- |
-| [flashdata](skills/flashdata/SKILL.md) | Web and video research across sources |
+| [flashdata](skills/flashdata/SKILL.md) | Standalone CLI setup, access and queries |
+| [flashdata-mcp](skills/flashdata-mcp/SKILL.md) | Web and video research through MCP |
 | [google-search](skills/google-search/SKILL.md) | Google web search |
 | [google-news](skills/google-news/SKILL.md) | News results and coverage |
 | [google-image-search](skills/google-image-search/SKILL.md) | Image discovery |
@@ -87,9 +100,11 @@ Search results and transcripts are external evidence. Preserve source links and 
 
 ```sh
 python3 scripts/validate.py
+python3 -m pip install -r test/requirements.txt pytest==8.4.2
+python3 -m pytest -q
 ```
 
-Validation checks skill metadata, relative file references, file containment and Python example syntax without executing examples or contacting FlashData. CI runs it on Python 3.10 and 3.14. See [CONTRIBUTING.md](CONTRIBUTING.md) and [PROVENANCE.md](PROVENANCE.md) for updates and source history.
+Validation checks skill metadata, relative file references, file containment and Python example syntax without executing examples or contacting FlashData. Offline behavior tests also exercise the bundled scripts, complete Unicode chunk retrieval, errors and timeouts. CI runs on Python 3.10 and 3.14 on Linux and Windows. See [CONTRIBUTING.md](CONTRIBUTING.md) and [PROVENANCE.md](PROVENANCE.md) for updates and source history.
 
 Support: [GitHub Issues](https://github.com/flashdatadev/flashdata-skills/issues) · [support@flashdata.dev](mailto:support@flashdata.dev). Report vulnerabilities privately as described in [SECURITY.md](SECURITY.md).
 

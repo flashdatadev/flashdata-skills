@@ -27,6 +27,9 @@ def main():
         for path in skill.parent.rglob('*'):
             if path.is_symlink():
                 raise ValueError(f'Symlinks are not portable: {path}')
+            if path.is_file() and path.suffix == '.py':
+                ast.parse(path.read_text(encoding='utf-8'), filename=str(path))
+                examples += 1
             if not path.is_file() or path.suffix != '.md':
                 continue
             text = path.read_text(encoding='utf-8')
