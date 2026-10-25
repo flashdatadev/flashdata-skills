@@ -17,7 +17,9 @@ flashdata setup
 
 选择 Codex、Claude Code 或 Cursor，并确认项目目录。设置会安装随附的 16 个 CLI 技能并验证访问，不执行付费查询。添加 `--global` 可安装到用户全局目录，无需 Node.js 或独立技能安装器。其他 CLI 安装方式见[安装指南](https://github.com/flashdatadev/flashdata-cli/blob/main/docs/installation.md)。
 
-`setup` 复用已有访问凭据，或为新配置保存临时访问。默认试用范围为 Google 搜索和 YouTube 元数据。字幕或其他来源需要[选择范围或连接账户](https://github.com/flashdatadev/flashdata-cli/blob/main/docs/onboarding.md)。已有 API key 时，设置前运行 `flashdata auth login` 并在隐藏提示中输入；通过 `flashdata auth status` 检查访问。
+**注册前即可试用。** 对于尚无凭据的新配置，`setup` 会申请临时访问并保存在本地，无需先注册账户或自行提供 API key。试用取决于可用性和资格，提供有限的共享 Credits，默认申请 Google 搜索和 YouTube 元数据。安装技能不会增加其他来源的访问权限。运行 `flashdata discover` 查看当前试用限制，通过 `flashdata auth status` 检查访问。
+
+设置会复用已有凭据。已有 API key 时，设置前通过 `flashdata auth login` 导入。准备注册时，运行 `flashdata auth claim`，在浏览器中批准访问，再运行 `flashdata auth finish --wait`。其他试用来源及账户连接步骤见[接入指南](https://github.com/flashdatadev/flashdata-cli/blob/main/docs/onboarding.md)。重复设置不会替换已过期或耗尽额度的试用。
 
 现在可以让 agent“搜索近期电池回收研究，附上来源链接”，或运行：
 
@@ -25,7 +27,7 @@ flashdata setup
 flashdata search "battery recycling research" --num 5 --accept text/plain --json=false
 ```
 
-数据查询消耗 Credits。密钥保存在 CLI 受保护的配置或密钥管理器中。
+数据查询消耗 Credits，通过 `flashdata account balance` 查看剩余额度。密钥保存在 CLI 受保护的配置或密钥管理器中。
 
 ## 设置选项
 
@@ -35,7 +37,9 @@ flashdata search "battery recycling research" --num 5 --accept text/plain --json
 flashdata setup --agent codex --global --non-interactive
 ```
 
-使用 `--skip-auth` 可离线安装；`--skill google-search` 可选择单个技能。更新时升级 CLI 后重新运行设置。本地修改或冲突文件会保留并报告，详见[引导设置](https://github.com/flashdatadev/flashdata-cli/blob/main/docs/agent-setup.zh-CN.md)。
+设置已包含访问初始化，无需另外运行 `init`。只需终端命令、不安装技能时，改用 `flashdata init --name "My CLI"`。`--skip-auth` 仅离线安装和检查技能，不创建试用，也不修改凭据；查询仍需要已配置的访问。
+
+`--skill google-search` 可选择单个技能。更新时升级 CLI 后重新运行设置。本地修改或冲突文件会保留并报告，详见[引导设置](https://github.com/flashdatadev/flashdata-cli/blob/main/docs/agent-setup.zh-CN.md)。
 
 ## 输出格式
 

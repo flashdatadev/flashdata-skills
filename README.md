@@ -17,7 +17,9 @@ Setup requires CLI 1.2.0 or newer. While the PyPI update is pending, use a [nati
 
 Select Codex, Claude Code or Cursor and confirm the project directories. Setup installs the 16 bundled CLI skills and verifies access without a paid query. Add `--global` for a user-wide installation. No Node.js or separate skills installer is needed. For other CLI installation methods, see the [installation guide](https://github.com/flashdatadev/flashdata-cli/blob/main/docs/installation.md).
 
-`setup` reuses existing access or saves temporary access for a new profile. Its default trial scopes are Google Search and YouTube metadata. For transcripts or other sources, [choose scopes or connect your account](https://github.com/flashdatadev/flashdata-cli/blob/main/docs/onboarding.md). If you already have an API key, run `flashdata auth login` and paste it at the hidden prompt before setup. Check access with `flashdata auth status`.
+**Try before signing up.** For a new profile without credentials, `setup` requests temporary access and saves it locally; you do not need an account or an API key of your own. Trials depend on availability and eligibility, with limited shared Credits and Google Search and YouTube metadata requested by default. Installing skills does not grant access to other sources. Run `flashdata discover` for current trial limits and `flashdata auth status` to check your access.
+
+Setup reuses existing credentials. If you already have an API key, import it with `flashdata auth login` before setup. When ready to sign up, run `flashdata auth claim`, approve access in your browser, then run `flashdata auth finish --wait`. See [onboarding](https://github.com/flashdatadev/flashdata-cli/blob/main/docs/onboarding.md) for other trial sources and the account connection steps. Rerunning setup does not replace an expired or exhausted trial.
 
 Now ask your agent: “Search for recent battery recycling research and include source links.” Or run:
 
@@ -25,7 +27,7 @@ Now ask your agent: “Search for recent battery recycling research and include 
 flashdata search "battery recycling research" --num 5 --accept text/plain --json=false
 ```
 
-Data queries use Credits. Keep your key in the CLI’s protected profile or your secret manager.
+Data queries use Credits; check the remaining allowance with `flashdata account balance`. Keep your key in the CLI’s protected profile or your secret manager.
 
 ## Setup options
 
@@ -35,7 +37,9 @@ Setup requires CLI 1.2.0 or newer. Existing uv users can run `uv tool upgrade fl
 flashdata setup --agent codex --global --non-interactive
 ```
 
-Use `--skip-auth` for offline skill installation. Use `--skill google-search` to select individual skills. To refresh installed skills, upgrade the CLI and rerun setup. Edited or conflicting files are preserved and reported. See [guided setup](https://github.com/flashdatadev/flashdata-cli/blob/main/docs/agent-setup.md).
+Setup includes access initialization; you do not need to run `init` as well. For terminal-only use without skills, use `flashdata init --name "My CLI"` instead. `--skip-auth` only installs and checks skills offline: it creates no trial and leaves credentials unchanged. Queries still need configured access.
+
+Use `--skill google-search` to select individual skills. To refresh installed skills, upgrade the CLI and rerun setup. Edited or conflicting files are preserved and reported. See [guided setup](https://github.com/flashdatadev/flashdata-cli/blob/main/docs/agent-setup.md).
 
 ## Choose an output
 
