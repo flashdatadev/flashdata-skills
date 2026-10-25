@@ -62,6 +62,8 @@ Agent 工作流默认优先使用 Markdown。CLI 技能通过 `--accept text/pla
 
 随附 Python 脚本供程序读取结构化结果：支持时选择 JSON，在同一连接中读完所有分块，不自动重试付费请求。请将 `mcp_response.py` 与示例脚本保存在一起。
 
+对于只显示文本的客户端，格式化分块先提供简短 JSON 续读信息，再提供可读内容。使用 `result_id` 和 `next_offset` 读完后，完整文档仍是 Markdown 或纯文本。
+
 ## 技能列表
 
 | 技能 | 用途 |

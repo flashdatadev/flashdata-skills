@@ -62,6 +62,10 @@ Agent workflows prefer Markdown. The CLI skill requests `--accept text/plain --r
 
 The bundled Python scripts return complete structured results for programs. They select JSON when supported, read every chunk before closing the session, and never repeat the original paid call. Keep each script’s `mcp_response.py` helper beside it.
 
+For clients that expose only text, formatted chunk responses include a compact
+JSON continuation block followed by the readable chunk. Use its `result_id` and
+`next_offset` to finish the result; the complete document is still Markdown or text.
+
 ## Skills
 
 | Skill | Purpose |
