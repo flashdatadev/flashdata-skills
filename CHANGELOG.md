@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased — CLI agent setup
+## 2026-10-25 — CLI 1.2.0 agent setup
 
 - Make all 15 task skills use the CLI with plain-text output by default.
 - Move optional MCP/Python examples into references and simplify setup documentation.

@@ -6,17 +6,16 @@ Google Search and YouTube data for your agent, using the standalone FlashData CL
 
 ## Get started
 
-Install the CLI and skills, then initialize access:
+Install the CLI, then set up your agent:
 
 ```sh
 uv tool install flashdata-cli
-npx skills add flashdatadev/flashdata-skills --skill flashdata --skill google-search --skill youtube-transcript
-flashdata init --name "My agent"
+flashdata setup
 ```
 
-Select your agent when prompted by the skills installer. Add `--global` for a user-wide skill installation. For other CLI installation methods, see the [installation guide](https://github.com/flashdatadev/flashdata-cli/blob/main/docs/installation.md).
+Select Codex, Claude Code or Cursor and confirm the project directories. Setup installs the 16 bundled CLI skills and verifies access without a paid query. Add `--global` for a user-wide installation. No Node.js or separate skills installer is needed. For other CLI installation methods, see the [installation guide](https://github.com/flashdatadev/flashdata-cli/blob/main/docs/installation.md).
 
-`init` reuses existing access or saves temporary access for a new profile. Its default trial scopes are Google Search and YouTube metadata. For transcripts or other sources, [choose scopes or connect your account](https://github.com/flashdatadev/flashdata-cli/blob/main/docs/onboarding.md). If you already have an API key, run `flashdata auth login` and paste it at the hidden prompt instead. Check access with `flashdata auth status`.
+`setup` reuses existing access or saves temporary access for a new profile. Its default trial scopes are Google Search and YouTube metadata. For transcripts or other sources, [choose scopes or connect your account](https://github.com/flashdatadev/flashdata-cli/blob/main/docs/onboarding.md). If you already have an API key, run `flashdata auth login` and paste it at the hidden prompt before setup. Check access with `flashdata auth status`.
 
 Now ask your agent: “Search for recent battery recycling research and include source links.” Or run:
 
@@ -26,15 +25,9 @@ flashdata search "battery recycling research" --num 5 --accept text/plain --json
 
 Data queries use Credits. Keep your key in the CLI’s protected profile or your secret manager.
 
-## Guided setup in the next CLI release
+## Setup options
 
-The current CLI source includes guided setup; published v1.1.2 does not yet include these commands. After [building the current CLI](https://github.com/flashdatadev/flashdata-cli/blob/main/CONTRIBUTING.md#build-from-source):
-
-```sh
-flashdata setup
-```
-
-Choose Codex, Claude Code or Cursor and confirm the displayed project directories. Setup reuses or initializes access, installs the 16 CLI skills bundled with that executable and verifies access and installed files. It runs no paid search. For an explicit user-wide installation:
+Setup requires CLI 1.2.0 or newer. Existing uv users can run `uv tool upgrade flashdata-cli`, then rerun `flashdata setup`. To choose an agent explicitly and install for your user account:
 
 ```sh
 flashdata setup --agent codex --global --non-interactive

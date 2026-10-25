@@ -6,17 +6,16 @@
 
 ## 快速开始
 
-安装 CLI 和技能，然后初始化访问：
+安装 CLI，然后设置 agent：
 
 ```sh
 uv tool install flashdata-cli
-npx skills add flashdatadev/flashdata-skills --skill flashdata --skill google-search --skill youtube-transcript
-flashdata init --name "My agent"
+flashdata setup
 ```
 
-按技能安装器提示选择 agent；添加 `--global` 可安装到用户全局目录。其他 CLI 安装方式见[安装指南](https://github.com/flashdatadev/flashdata-cli/blob/main/docs/installation.md)。
+选择 Codex、Claude Code 或 Cursor，并确认项目目录。设置会安装随附的 16 个 CLI 技能并验证访问，不执行付费查询。添加 `--global` 可安装到用户全局目录，无需 Node.js 或独立技能安装器。其他 CLI 安装方式见[安装指南](https://github.com/flashdatadev/flashdata-cli/blob/main/docs/installation.md)。
 
-`init` 复用已有访问凭据，或为新配置保存临时访问。默认试用范围为 Google 搜索和 YouTube 元数据。字幕或其他来源需要[选择范围或连接账户](https://github.com/flashdatadev/flashdata-cli/blob/main/docs/onboarding.md)。已有 API key 时，改用 `flashdata auth login` 并在隐藏提示中输入；通过 `flashdata auth status` 检查访问。
+`setup` 复用已有访问凭据，或为新配置保存临时访问。默认试用范围为 Google 搜索和 YouTube 元数据。字幕或其他来源需要[选择范围或连接账户](https://github.com/flashdatadev/flashdata-cli/blob/main/docs/onboarding.md)。已有 API key 时，设置前运行 `flashdata auth login` 并在隐藏提示中输入；通过 `flashdata auth status` 检查访问。
 
 现在可以让 agent“搜索近期电池回收研究，附上来源链接”，或运行：
 
@@ -26,15 +25,9 @@ flashdata search "battery recycling research" --num 5 --accept text/plain --json
 
 数据查询消耗 Credits。密钥保存在 CLI 受保护的配置或密钥管理器中。
 
-## 下一版 CLI 的引导设置
+## 设置选项
 
-当前 CLI 源码已包含引导设置，已发布的 v1.1.2 尚不包含这些命令。[构建当前源码](https://github.com/flashdatadev/flashdata-cli/blob/main/CONTRIBUTING.md#build-from-source)后运行：
-
-```sh
-flashdata setup
-```
-
-选择 Codex、Claude Code 或 Cursor，并确认显示的项目目录。设置会复用或初始化访问、安装该可执行文件随附的 16 个 CLI 技能，并验证访问权限和安装文件，不运行付费搜索。指定用户全局安装：
+引导设置需要 CLI 1.2.0 或更新版本。已有 uv 用户可先运行 `uv tool upgrade flashdata-cli`，再运行 `flashdata setup`。指定 agent 并安装到用户全局目录：
 
 ```sh
 flashdata setup --agent codex --global --non-interactive
