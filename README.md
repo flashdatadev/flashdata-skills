@@ -51,7 +51,7 @@ The `flashdata`, `youtube-metadata`, `youtube-transcript`, `youtube-captions`, `
 
 Bulk exports stay **JSONL**, including download delivery receipts. Media files go to your cloud storage. The guides cover private configuration, status, pause/resume/cancel and recovery without duplicate submissions; see [bulk workflows](skills/flashdata/references/bulk.md). Plain text remains the default for individual query content. Bulk commands do not use `--accept` or `--respond-with`.
 
-The revised skills are available in this repository and the CLI source bundle; released CLI binaries keep their bundled revision until the next release. After upgrading to a release containing these changes, rerun `flashdata setup` to refresh unmodified skills.
+CLI [v1.2.1](https://github.com/flashdatadev/flashdata-cli/releases/tag/v1.2.1) bundles these bulk guides and examples. After upgrading, rerun `flashdata setup` to refresh unmodified skills. PyPI publication is pending; use a native installer or release download for v1.2.1 in the meantime.
 
 ## Optional MCP and Python
 

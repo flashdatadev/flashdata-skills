@@ -51,7 +51,7 @@ flashdata setup --agent codex --global --non-interactive
 
 批量导出保持 **JSONL** 格式，包括下载交付回执；媒体文件进入你的云存储。指南涵盖私密配置、状态、暂停/恢复/取消，以及不重复提交的任务恢复，见[批量工作流](skills/flashdata/references/bulk.md)。单次内容查询仍默认使用纯文本，批量命令不使用 `--accept` 或 `--respond-with`。
 
-更新后的技能已加入本仓库和 CLI 源码随附包；已发布的 CLI 二进制文件在下次发布前仍保留原有技能版本。升级到包含这些更新的版本后，重新运行 `flashdata setup` 更新未被本地修改的技能。
+CLI [v1.2.1](https://github.com/flashdatadev/flashdata-cli/releases/tag/v1.2.1) 已随附这些批量指南和示例。升级后重新运行 `flashdata setup`，更新未被本地修改的技能。PyPI 留待手动发布；上传前请使用原生安装器或版本下载包安装 v1.2.1。
 
 ## 可选 MCP 和 Python
 
