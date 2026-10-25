@@ -13,6 +13,8 @@ uv tool install flashdata-cli
 flashdata setup
 ```
 
+Setup requires CLI 1.2.0 or newer. While the PyPI update is pending, use a [native installer or release download](https://github.com/flashdatadev/flashdata-cli/blob/main/docs/installation.md#homebrew-linux-and-macos).
+
 Select Codex, Claude Code or Cursor and confirm the project directories. Setup installs the 16 bundled CLI skills and verifies access without a paid query. Add `--global` for a user-wide installation. No Node.js or separate skills installer is needed. For other CLI installation methods, see the [installation guide](https://github.com/flashdatadev/flashdata-cli/blob/main/docs/installation.md).
 
 `setup` reuses existing access or saves temporary access for a new profile. Its default trial scopes are Google Search and YouTube metadata. For transcripts or other sources, [choose scopes or connect your account](https://github.com/flashdatadev/flashdata-cli/blob/main/docs/onboarding.md). If you already have an API key, run `flashdata auth login` and paste it at the hidden prompt before setup. Check access with `flashdata auth status`.

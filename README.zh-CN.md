@@ -13,6 +13,8 @@ uv tool install flashdata-cli
 flashdata setup
 ```
 
+引导设置需要 CLI 1.2.0 或更新版本。PyPI 更新发布前，请使用[原生安装器或版本下载包](https://github.com/flashdatadev/flashdata-cli/blob/main/docs/installation.zh-CN.md#homebrewlinux-和-macos)。
+
 选择 Codex、Claude Code 或 Cursor，并确认项目目录。设置会安装随附的 16 个 CLI 技能并验证访问，不执行付费查询。添加 `--global` 可安装到用户全局目录，无需 Node.js 或独立技能安装器。其他 CLI 安装方式见[安装指南](https://github.com/flashdatadev/flashdata-cli/blob/main/docs/installation.md)。
 
 `setup` 复用已有访问凭据，或为新配置保存临时访问。默认试用范围为 Google 搜索和 YouTube 元数据。字幕或其他来源需要[选择范围或连接账户](https://github.com/flashdatadev/flashdata-cli/blob/main/docs/onboarding.md)。已有 API key 时，设置前运行 `flashdata auth login` 并在隐藏提示中输入；通过 `flashdata auth status` 检查访问。
