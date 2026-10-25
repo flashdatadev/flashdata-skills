@@ -1,70 +1,66 @@
 # FlashData Skills
 
-[简体中文](README.zh-CN.md) · [FlashData](https://flashdata.dev) · [API documentation](https://flashdata.dev/docs) · [Pricing](https://flashdata.dev/pricing)
+[简体中文](README.zh-CN.md) · [FlashData](https://flashdata.dev) · [API docs](https://flashdata.dev/docs)
 
-Official agent skills for Google Search, YouTube data and source-backed research with FlashData. This repository contains **17 portable skills**: one standalone CLI skill, one MCP research skill and 15 task skills, each with instructions and examples.
+Google Search and YouTube data for your agent, using the standalone FlashData CLI. Install once, connect your access and ask for the result. Skills use plain text by default; MCP is optional.
 
-## Choose a workflow
+## Get started
 
-| You want to | Start here |
-| --- | --- |
-| Use the standalone CLI | `flashdata` |
-| Research through an MCP connection | `flashdata-mcp` |
-| Use one Google or YouTube capability | Choose a task skill below |
-| Configure an MCP connection | [Connection guide](skills/flashdata-mcp/references/connection.md) |
-| Run a local MCP server | [FlashData MCP](https://github.com/flashdatadev/flashdata-mcp) |
-| Use the standalone command-line application | [FlashData CLI](https://github.com/flashdatadev/flashdata-cli) |
-
-## Install
-
-List the available skills using the [skills CLI](https://skills.sh/docs):
+Install the CLI and skills, then initialize access:
 
 ```sh
-npx skills add flashdatadev/flashdata-skills --list
+uv tool install flashdata-cli
+npx skills add flashdatadev/flashdata-skills --skill flashdata --skill google-search --skill youtube-transcript
+flashdata init --name "My agent"
 ```
 
-Choose the CLI skill, the MCP research skill, or individual tasks:
+Select your agent when prompted by the skills installer. Add `--global` for a user-wide skill installation. For other CLI installation methods, see the [installation guide](https://github.com/flashdatadev/flashdata-cli/blob/main/docs/installation.md).
+
+`init` reuses existing access or saves temporary access for a new profile. Its default trial scopes are Google Search and YouTube metadata. For transcripts or other sources, [choose scopes or connect your account](https://github.com/flashdatadev/flashdata-cli/blob/main/docs/onboarding.md). If you already have an API key, run `flashdata auth login` and paste it at the hidden prompt instead. Check access with `flashdata auth status`.
+
+Now ask your agent: “Search for recent battery recycling research and include source links.” Or run:
 
 ```sh
-npx skills add flashdatadev/flashdata-skills --skill flashdata
+flashdata search "battery recycling research" --num 5 --accept text/plain --json=false
+```
+
+Data queries use Credits. Keep your key in the CLI’s protected profile or your secret manager.
+
+## Guided setup in the next CLI release
+
+The current CLI source includes guided setup; published v1.1.2 does not yet include these commands. After [building the current CLI](https://github.com/flashdatadev/flashdata-cli/blob/main/CONTRIBUTING.md#build-from-source):
+
+```sh
+flashdata setup
+```
+
+Choose Codex, Claude Code or Cursor and confirm the displayed project directories. Setup reuses or initializes access, installs the 16 CLI skills bundled with that executable and verifies access and installed files. It runs no paid search. For an explicit user-wide installation:
+
+```sh
+flashdata setup --agent codex --global --non-interactive
+```
+
+Use `--skip-auth` for offline skill installation. Use `--skill google-search` to select individual skills. To refresh installed skills, upgrade the CLI and rerun setup. Edited or conflicting files are preserved and reported. See [guided setup](https://github.com/flashdatadev/flashdata-cli/blob/main/docs/agent-setup.md).
+
+## Choose an output
+
+Skill content commands request `--accept text/plain --json=false`. Add `--respond-with markdown` for Markdown. For structured processing use `--accept application/json --json`. The API and SDK defaults remain JSON; account, auth and discovery metadata also remain JSON.
+
+## Optional MCP and Python
+
+If you already use an MCP connection, keep it and install the `flashdata-mcp` research skill:
+
+```sh
 npx skills add flashdatadev/flashdata-skills --skill flashdata-mcp
-npx skills add flashdatadev/flashdata-skills --skill google-search --skill youtube-transcript
 ```
 
-Select your agent when prompted. Add `--agent codex` to select Codex, or another agent supported by the skills CLI. The default scope is the current project; `--global` chooses a user-wide installation. Review the selected skill and any existing skill with the same name before replacing it.
+Follow the [MCP connection guide](skills/flashdata-mcp/references/connection.md). Each task skill links to its optional MCP inputs and Python examples under `references/mcp.md`; Python packages are needed only for those examples. They read complete results before closing the session. Normal CLI setup installs no MCP server and changes no MCP connection.
 
-Alternatively, copy an entire `skills/<name>/` directory into the skill location documented by your agent. Keep its `references/` and `scripts/` subdirectories when present. No sibling skill is required.
+## Manual installation and existing skills
 
-Installing a skill provides instructions and reference files. It does not install an MCP server or CLI, connect an account, or submit data queries. Client marketplaces and directory listings are separate from this source repository.
+Use `npx skills add flashdatadev/flashdata-skills --list` to browse all 17 skills. Each skill is self-contained: copy its entire directory, including references, assets and scripts, if installing manually. The skill installer supplies instructions; install the CLI separately.
 
-## Updating an existing installation
-
-The MCP research skill previously used the name `flashdata`. It is now `flashdata-mcp`; install that name to continue using MCP. `flashdata` now matches the standalone CLI skill distributed by the FlashData website. Choose the intended skill before replacing an older installation. This rename does not change credentials or MCP connections.
-
-## Connect FlashData
-
-Reuse an existing FlashData MCP connection, or follow the [client setup instructions](https://flashdata.dev/mcp):
-
-- Endpoint: `https://data.flashdata.dev/mcp`
-- Transport: Streamable HTTP
-- API-key header: `X-API-Key`
-- Obtain a key from [your FlashData console](https://flashdata.dev/app/api-keys).
-
-Keep the key in the client's protected settings or environment-backed headers. Do not paste it into chat or commit it. Clients differ in supported authentication; use the documented configuration for your client. For local stdio, see [flashdata-mcp](https://github.com/flashdatadev/flashdata-mcp#run-locally).
-
-After connecting, ask the agent to quote one Google search with `get_pricing`, `source: "google_search"`, `request_count: 1`, without running the search. A quote is a free connection check, not paid-query authorization.
-
-The Python quick starts inside task skills use Python 3.10+, `mcp==1.30.0` and `httpx==0.28.1`. They are optional examples for hosted MCP, not dependencies required to read or install a skill. Running a data example sends a paid query; use it only within your approved task and budget.
-
-## Response formats
-
-Agent workflows prefer Markdown. The CLI skill requests `--accept text/plain --respond-with markdown --json=false` for content. Local MCP 0.3.0 defaults to Markdown text, with original fields in `structuredContent`; `response_format: "text"` and `"json"` are explicit alternatives. Hosted and older servers may differ: use only options advertised by the connected tool schema. REST and SDK defaults remain JSON.
-
-The bundled Python scripts return complete structured results for programs. They select JSON when supported, read every chunk before closing the session, and never repeat the original paid call. Keep each script’s `mcp_response.py` helper beside it.
-
-For clients that expose only text, formatted chunk responses include a compact
-JSON continuation block followed by the readable chunk. Use its `result_id` and
-`next_offset` to finish the result; the complete document is still Markdown or text.
+Existing task skill names are unchanged. `flashdata` is the CLI overview; the former MCP research skill is named `flashdata-mcp`. Review local edits before replacing an older skill.
 
 ## Skills
 

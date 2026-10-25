@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased — CLI agent setup
+
+- Make all 15 task skills use the CLI with plain-text output by default.
+- Move optional MCP/Python examples into references and simplify setup documentation.
+
+
 ## 2026-10-25
 
 - Separate the standalone CLI skill (`flashdata`) from MCP research (`flashdata-mcp`).
