@@ -2,7 +2,7 @@
 
 [简体中文](README.zh-CN.md) · [FlashData](https://flashdata.dev) · [API docs](https://flashdata.dev/docs)
 
-Google Search and YouTube data for your agent, using the standalone FlashData CLI. Install once, connect your access and ask for the result. Skills use plain text by default; MCP is optional.
+Google Search and YouTube data for your agent, using the standalone FlashData CLI. Install once, connect your access and ask for the result. Individual query content defaults to plain text; bulk exports stay JSONL. MCP is optional.
 
 ## Get started
 
@@ -44,6 +44,14 @@ Use `--skill google-search` to select individual skills. To refresh installed sk
 ## Choose an output
 
 Skill content commands request `--accept text/plain --json=false`. Add `--respond-with markdown` for Markdown. For structured processing use `--accept application/json --json`. The API and SDK defaults remain JSON; account, auth and discovery metadata also remain JSON.
+
+## Bulk video datasets and downloads
+
+The `flashdata`, `youtube-metadata`, `youtube-transcript`, `youtube-captions`, `youtube-license-check` and `youtube-download` skills include self-contained bulk guides. Give your agent a video-ID list, the desired source/options and a budget. For example: “Export metadata for the IDs in this file to JSONL” or “Deliver MP3 audio for these videos to my configured bucket.”
+
+Bulk exports stay **JSONL**, including download delivery receipts. Media files go to your cloud storage. The guides cover private configuration, status, pause/resume/cancel and recovery without duplicate submissions; see [bulk workflows](skills/flashdata/references/bulk.md). Plain text remains the default for individual query content. Bulk commands do not use `--accept` or `--respond-with`.
+
+The revised skills are available in this repository and the CLI source bundle; released CLI binaries keep their bundled revision until the next release. After upgrading to a release containing these changes, rerun `flashdata setup` to refresh unmodified skills.
 
 ## Optional MCP and Python
 

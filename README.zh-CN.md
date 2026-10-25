@@ -2,7 +2,7 @@
 
 [English](README.md) · [FlashData](https://flashdata.dev) · [API 文档](https://flashdata.dev/docs)
 
-通过独立 FlashData CLI，为 agent 获取 Google 搜索和 YouTube 数据。安装后配置访问权限，即可描述任务。技能默认输出纯文本，MCP 为可选方式。
+通过独立 FlashData CLI，为 agent 获取 Google 搜索和 YouTube 数据。安装后配置访问权限，即可描述任务。单次内容查询默认输出纯文本，批量导出保持 JSONL，MCP 为可选方式。
 
 ## 快速开始
 
@@ -44,6 +44,14 @@ flashdata setup --agent codex --global --non-interactive
 ## 输出格式
 
 技能内容命令默认使用 `--accept text/plain --json=false`。需要 Markdown 时添加 `--respond-with markdown`；程序读取结构化数据时使用 `--accept application/json --json`。API、SDK、账户、认证和发现元数据仍默认使用 JSON。
+
+## 批量视频数据与下载
+
+`flashdata`、`youtube-metadata`、`youtube-transcript`、`youtube-captions`、`youtube-license-check` 和 `youtube-download` 均提供独立完整的批量指南。向 agent 提供视频 ID 列表、来源与选项，以及预算。例如：“将这个文件中的视频元数据导出为 JSONL”或“将这些视频的 MP3 音频交付到已配置的存储桶”。
+
+批量导出保持 **JSONL** 格式，包括下载交付回执；媒体文件进入你的云存储。指南涵盖私密配置、状态、暂停/恢复/取消，以及不重复提交的任务恢复，见[批量工作流](skills/flashdata/references/bulk.md)。单次内容查询仍默认使用纯文本，批量命令不使用 `--accept` 或 `--respond-with`。
+
+更新后的技能已加入本仓库和 CLI 源码随附包；已发布的 CLI 二进制文件在下次发布前仍保留原有技能版本。升级到包含这些更新的版本后，重新运行 `flashdata setup` 更新未被本地修改的技能。
 
 ## 可选 MCP 和 Python
 

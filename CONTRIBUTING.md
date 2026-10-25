@@ -9,10 +9,12 @@ Review examples against the documented API and preserve source citations, budget
 handling and credential boundaries. Tests must not submit paid API queries.
 
 Update both README languages when changing installation or the skill catalog.
-Shared skills also have compatibility copies in flashdatadev/flashdata-mcp for
-existing client plugins; update those copies in a corresponding change and run
-that repository's plugin synchronization check. Do not assume that publishing
-source updates npm packages or marketplace listings.
+Shared MCP references and scripts also have compatibility copies in
+flashdatadev/flashdata-mcp for existing client plugins. When changing that shared
+MCP content, update the corresponding copies and run that repository's plugin
+synchronization checks. Standalone CLI instructions and bulk guides are maintained
+here; the MCP repository keeps its own MCP-specific entrypoints. Do not assume
+that publishing source updates npm packages or marketplace listings.
 
 Run `python3 -m pip install -r test/requirements.txt pytest==8.4.2` and
 `python3 -m pytest -q`. Keep all copies of `mcp_response.py` identical. Test fixtures
