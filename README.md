@@ -32,6 +32,8 @@ Skills use plain text for individual query content; ask for Markdown or structur
 
 Data queries use Credits. Tell your agent your budget, or check the allowance with `flashdata account balance`.
 
+Transcript and captions support one language or a list of 1–10 codes. Omit the language to prefer `en-orig`, then `en`. Lists preserve available tracks and per-language errors. See [subtitle languages](skills/youtube-transcript/references/mcp.md).
+
 ## Available skills
 
 | Skill | Purpose |

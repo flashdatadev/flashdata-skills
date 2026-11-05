@@ -19,6 +19,23 @@ from mcp_response import read_complete, call_complete, response_body
 
 HELPER = SimpleNamespace(ENDPOINT="https://data.flashdata.dev/mcp")
 SCHEMAS = json.loads((ROOT / "test/schemas.json").read_text(encoding="utf-8"))
+
+
+@pytest.mark.parametrize("source", ["youtube_transcript", "youtube_captions"])
+def test_subtitle_language_examples_match_contract(source):
+    schema = SCHEMAS[source]
+    assert "default" not in schema["properties"]["language"]
+    for language in ["en", ["en"], ["en", "es"], list("abcdefghij")]:
+        jsonschema.validate({"video_id": "aircAruvnKk", "language": language}, schema)
+    jsonschema.validate({"video_id": "aircAruvnKk"}, schema)
+    for language in [None, "", [], ["en", "en"], ["en", None], list("abcdefghijk")]:
+        with pytest.raises(jsonschema.ValidationError):
+            jsonschema.validate({"video_id": "aircAruvnKk", "language": language}, schema)
+    skill = ROOT / "skills" / source.replace("_", "-")
+    query = json.loads((skill / "assets/query.json").read_text())
+    options = json.loads((skill / "assets/bulk-options.json").read_text())
+    assert query["params"] == options
+    jsonschema.validate({"video_id": query["video_id"], **query["params"]}, schema)
 SCHEMAS["get_job"] = {
     "type": "object", "properties": {"job_id": {"const": "job_fixture"}},
     "required": ["job_id"], "additionalProperties": False,

@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Add transcript/caption language lists, the omitted-language fallback and guidance for partial results. Other source APIs are unchanged.
+
 ## 2026-10-25 — CLI 1.2.0 agent setup
 
 - Make all 15 task skills use the CLI with plain-text output by default.

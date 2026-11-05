@@ -32,6 +32,8 @@ flashdata setup
 
 数据查询消耗 Credits。请向 agent 说明预算，或通过 `flashdata account balance` 查看额度。
 
+转录和字幕支持单个语言或 1–10 个语言代码的列表。省略语言时优先选择 `en-orig`，其次选择 `en`，返回一条字幕；列表返回可用字幕及逐语言错误。参见[字幕语言说明](skills/youtube-transcript/references/mcp.md)。
+
 ## 技能列表
 
 | 技能 | 用途 |
