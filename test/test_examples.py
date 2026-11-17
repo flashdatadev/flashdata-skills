@@ -21,6 +21,13 @@ HELPER = SimpleNamespace(ENDPOINT="https://data.flashdata.dev/mcp")
 SCHEMAS = json.loads((ROOT / "test/schemas.json").read_text(encoding="utf-8"))
 
 
+@pytest.mark.parametrize("provider", ["s3", "s3_compatible", "oss", "cos", "bos", "tos"])
+def test_sts_storage_example_matches_download_contract(provider):
+    storage = json.loads((ROOT / "skills/youtube-download/assets/storage-sts.json").read_text())
+    storage["storage_type"] = provider
+    jsonschema.validate({"video_id": "dQw4w9WgXcQ", "storage": storage}, SCHEMAS["youtube_download"])
+
+
 @pytest.mark.parametrize("source", ["youtube_transcript", "youtube_captions"])
 def test_subtitle_language_examples_match_contract(source):
     schema = SCHEMAS[source]

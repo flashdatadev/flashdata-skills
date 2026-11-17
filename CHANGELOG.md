@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Document temporary STS credentials (`session_token`) for S3, S3-compatible
+  storage, OSS, COS, BOS and TOS, including bulk delivery and credential expiry.
+
 - Add transcript/caption language lists, the omitted-language fallback and guidance for partial results. Other source APIs are unchanged.
 
 ## 2026-10-25 — CLI 1.2.0 agent setup
